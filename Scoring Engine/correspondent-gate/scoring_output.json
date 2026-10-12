@@ -1,0 +1,139 @@
+{
+  "schema_name": "SCORING_RESULT",
+  "schema_version": "1.0.0",
+  "case_id": "CG-CASE-HP-002",
+  "run_id": "CG-RUN-HP-002",
+  "scoring_authorised": true,
+  "status": "OFFICIAL",
+  "contract_validation": "PASS",
+  "gate1_review_allowed": "ALLOWED",
+  "business_readiness": "READY",
+  "gate_1_decision": {
+    "gate_1_decision_id": "GATE1-HP-002-001",
+    "gate_1_status": "APPROVED_FOR_SCORING",
+    "reviewer_role": "Financial Crime Analyst",
+    "reviewer_id": "R. Nayan",
+    "decision_date": "2026-10-03",
+    "reviewer_comments": "Identity matched across both instruments. Evidence reviewed per the resolutions below. No material contradiction between the scoping form and the respondent submission.",
+    "approved_indicator_ids": null,
+    "excluded_indicator_ids": null
+  },
+  "validation_provenance": {
+    "validator_version": "1.0.2",
+    "validation_executed_on": "2026-09-28T20:59:13.241Z",
+    "validation_result": "PASS",
+    "packet_status_at_generation": "DRAFT_PENDING_DETERMINISTIC_VALIDATION"
+  },
+  "open_blockers": [],
+  "risk_model_version": "v0.1",
+  "mapping_version": "1.1.0",
+  "configVersion": "v0.1",
+  "inherent": 16.5,
+  "factorLines": [
+    {
+      "factorId": "F1",
+      "anchor": 0,
+      "weight": 20,
+      "weighted": 0,
+      "unanswered": false,
+      "evidenceRefs": [
+        "SRC-CBDDQ-2"
+      ]
+    },
+    {
+      "factorId": "F2",
+      "anchor": 0,
+      "weight": 15,
+      "weighted": 0,
+      "unanswered": false,
+      "evidenceRefs": [
+        "SRC-CBDDQ-13"
+      ]
+    },
+    {
+      "factorId": "F3",
+      "anchor": 3,
+      "weight": 20,
+      "weighted": 6,
+      "unanswered": false,
+      "evidenceRefs": [
+        "SRC-CBDDQ-6"
+      ]
+    },
+    {
+      "factorId": "F4",
+      "anchor": 0,
+      "weight": 10,
+      "weighted": 0,
+      "unanswered": false,
+      "evidenceRefs": [
+        "SRC-CBDDQ-17"
+      ]
+    },
+    {
+      "factorId": "F5",
+      "anchor": 3,
+      "weight": 25,
+      "weighted": 7.5,
+      "unanswered": false,
+      "evidenceRefs": [
+        "SRC-CBDDQ-19"
+      ]
+    },
+    {
+      "factorId": "F6",
+      "anchor": 3,
+      "weight": 10,
+      "weighted": 3,
+      "unanswered": false,
+      "evidenceRefs": [
+        "SRC-SCOPE-S23"
+      ]
+    }
+  ],
+  "controlLines": [
+    {
+      "domainId": "C1",
+      "tier": "Self-asserted only",
+      "multiplier": 0.94,
+      "evidenceRefs": [
+        "SRC-CBDDQ-22",
+        "SRC-SCOPE-S34"
+      ]
+    },
+    {
+      "domainId": "C2",
+      "tier": "Self-asserted only",
+      "multiplier": 0.94,
+      "evidenceRefs": [
+        "SRC-CBDDQ-62",
+        "SRC-SCOPE-S34"
+      ]
+    },
+    {
+      "domainId": "C3",
+      "tier": "Self-asserted only",
+      "multiplier": 0.94,
+      "evidenceRefs": [
+        "SRC-CBDDQ-98",
+        "SRC-SCOPE-S34"
+      ]
+    },
+    {
+      "domainId": "C4",
+      "tier": "Self-asserted only",
+      "multiplier": 0.94,
+      "evidenceRefs": [
+        "SRC-CBDDQ-49D",
+        "SRC-SCOPE-S34"
+      ]
+    }
+  ],
+  "combinedMultiplier": 0.7807,
+  "unflooredResidual": 12.88,
+  "floorValue": 3.3,
+  "floorApplied": false,
+  "residual": 12.88,
+  "band": "Low",
+  "approval": "Analyst at Gate 2"
+}

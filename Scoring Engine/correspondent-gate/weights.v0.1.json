@@ -1,0 +1,22 @@
+{
+  "version": "v0.1",
+  "effective_from": "2026-09-16",
+  "_note": "Configuration, not code. Changes are made by the Risk Owner role, recorded in the change log with a justification, and every assessment records the version that scored it.",
+  "factor_weights": {
+    "F1": 20, "F2": 15, "F3": 20, "F4": 10, "F5": 25, "F6": 10
+  },
+  "control_domains": ["C1", "C2", "C3", "C4"],
+  "evidence_multipliers": {
+    "Independently evidenced": 0.65,
+    "Partially evidenced": 0.82,
+    "Self-asserted only": 0.94,
+    "Absent or unanswered": 1.0
+  },
+  "residual_floor": 0.20,
+  "bands": [
+    {"lower_bound": 0,  "name": "Low",       "approval": "Analyst at Gate 2"},
+    {"lower_bound": 20, "name": "Moderate",  "approval": "Analyst at Gate 2, conditions recorded"},
+    {"lower_bound": 40, "name": "High",      "approval": "Committee at Gate 3"},
+    {"lower_bound": 65, "name": "Prohibited pending exception", "approval": "Executive exception with written rationale and review date"}
+  ]
+}

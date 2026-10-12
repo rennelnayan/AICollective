@@ -1,0 +1,39 @@
+{
+  "schema_name": "GATE1_DECISION",
+  "schema_version": "1.0.0",
+  "case_id": "CG-CASE-HP-002",
+  "run_id": "CG-RUN-HP-002",
+  "_note": "Written by the human reviewer, not by any automated component. This file is the record of the Gate 1 decision and the resolutions that cleared the open items. The scoring engine reads it as an input; nothing generates it.",
+
+  "gate_1_decision_id": "GATE1-HP-002-001",
+  "gate_1_status": "APPROVED_FOR_SCORING",
+  "reviewer_role": "Financial Crime Analyst",
+  "reviewer_id": "R. Nayan",
+  "decision_date": "2026-10-03",
+  "reviewer_comments": "Identity matched across both instruments. Evidence reviewed per the resolutions below. No material contradiction between the scoping form and the respondent submission.",
+
+  "exception_resolutions": [
+    {
+      "exception_id": "EXC-0002",
+      "resolution": "REVIEWED",
+      "resolved_by": "R. Nayan",
+      "resolved_on": "2026-10-03",
+      "evidence_reviewed": ["EV-004", "EV-005", "EV-006", "EV-007", "EV-008", "EV-009"],
+      "finding": "All six respondent-supplied documents reviewed for authenticity, scope, currency and relevance. Documents are internally consistent and current. No independent assurance report was supplied, so control domains remain at the self-asserted tier.",
+      "control_evidence_status": "PROVIDED_NOT_INDEPENDENTLY_VERIFIED"
+    }
+  ],
+
+  "hard_exclusion_resolutions": [
+    {
+      "hard_exclusion_candidate_id": "HEX-0003",
+      "exclusion_rule_id": "COMPREHENSIVELY_SANCTIONED_PRESENCE",
+      "status": "NOT_TRIGGERED",
+      "resolved_by": "Sanctions Operations",
+      "resolved_on": "2026-10-03",
+      "determination_source": "Provider-controlled sanctions screening against the maintained comprehensively sanctioned jurisdiction list",
+      "finding": "Respondent operates from the United Kingdom with no declared branches or representative offices in any comprehensively sanctioned jurisdiction. Determination made from the provider's own jurisdiction list, not from the respondent's answers.",
+      "list_version": "SANCTIONS-LIST-2026-09"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "report_type": "DETERMINISTIC_VALIDATION_REPORT",
+  "report_version": "1.0.0",
+  "case_id": "CG-CASE-HP-002",
+  "run_id": "CG-RUN-HP-002",
+  "validator_version": "1.0.2",
+  "executed_on": "2026-09-28T20:59:13.241Z",
+  "overall_result": "PASS",
+  "gate_1_review_allowed": true,
+  "summary": {
+    "total_checks": 17,
+    "passed": 17,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "blocking_failures": 0
+  },
+  "findings": [
+    {
+      "check_id": "JSON_PARSE_VALID",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "All located JSON blocks parse.",
+      "actual_value": "",
+      "required_action": ""
+    },
+    {
+      "check_id": "REQUIRED_AGENT_ARTIFACTS",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "All required Configuration 7 Copilot artifacts must exist.",
+      "actual_value": "",
+      "required_action": ""
+    },
+    {
+      "check_id": "CASE_RUN_ID_MATCH",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Case ID and Run ID must match the validator invocation.",
+      "actual_value": "CG-CASE-HP-002|CG-CASE-HP-002|CG-CASE-HP-002|CG-CASE-HP-002 / CG-RUN-HP-002|CG-RUN-HP-002|CG-RUN-HP-002|CG-RUN-HP-002",
+      "required_action": ""
+    },
+    {
+      "check_id": "SOURCE_RECORD_ID_UNIQUE",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Canonical Source Register IDs must be unique.",
+      "actual_value": "201",
+      "required_action": ""
+    },
+    {
+      "check_id": "FACT_ID_UNIQUE",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Fact IDs must be unique.",
+      "actual_value": "22",
+      "required_action": ""
+    },
+    {
+      "check_id": "MATERIAL_REFERENCE_RESOLVES",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Each atomic material reference must resolve to exactly one workbook source. Every atomic member of a composite reference must resolve exactly once.",
+      "actual_value": "[]",
+      "required_action": ""
+    },
+    {
+      "check_id": "FACT_REFERENCE_INTEGRITY",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Every fact material-source reference must exist.",
+      "actual_value": "[]",
+      "required_action": ""
+    },
+    {
+      "check_id": "MATERIAL_FACT_SUBSET",
+      "result": "PASS",
+      "severity": "HIGH",
+      "check_description": "Every material fact must exist in FACT_SET.",
+      "actual_value": "",
+      "required_action": ""
+    },
+    {
+      "check_id": "APPROVED_MAPPING_RULE",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Every mapped candidate must use an approved mapping rule.",
+      "actual_value": "",
+      "required_action": ""
+    },
+    {
+      "check_id": "DECLARED_COUNTS_MATCH",
+      "result": "PASS",
+      "severity": "HIGH",
+      "check_description": "Package Manifest counts must equal semantic artifact array lengths.",
+      "actual_value": "[]",
+      "required_action": ""
+    },
+    {
+      "check_id": "VERSION_MATCH",
+      "result": "PASS",
+      "severity": "HIGH",
+      "check_description": "Declared schema, mapping, and risk-model versions must match the invocation.",
+      "actual_value": "{\"schema_versions\":[\"1.1.0\",\"1.1.0\",\"1.1.0\"],\"mapping_version\":\"1.0.0\",\"risk_model_version\":\"0.1\"}",
+      "required_action": ""
+    },
+    {
+      "check_id": "GATE1_DECISION_BLANK",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Gate 1 decision fields must remain blank.",
+      "actual_value": "false",
+      "required_action": ""
+    },
+    {
+      "check_id": "EXHAUSTIVE_SOURCE_REGISTER_ABSENT_FROM_AGENT",
+      "result": "PASS",
+      "severity": "HIGH",
+      "check_description": "Copilot must not output the exhaustive Source Register.",
+      "actual_value": "false",
+      "required_action": ""
+    },
+    {
+      "check_id": "OFFICIAL_SCORE_ABSENT",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Official, gross, net, or overall score content must be absent.",
+      "actual_value": "false",
+      "required_action": ""
+    },
+    {
+      "check_id": "RISK_BAND_ABSENT",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Official risk rating or risk band content must be absent.",
+      "actual_value": "false",
+      "required_action": ""
+    },
+    {
+      "check_id": "APPROVAL_REJECTION_ABSENT",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "check_description": "Gate 1 or relationship approval and rejection content must be absent.",
+      "actual_value": "false",
+      "required_action": ""
+    },
+    {
+      "check_id": "VALIDATION_CLAIM_ABSENT",
+      "result": "PASS",
+      "severity": "HIGH",
+      "check_description": "The Copilot package must not claim deterministic validation passed.",
+      "actual_value": "false",
+      "required_action": ""
+    }
+  ]
+}
