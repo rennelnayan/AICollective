@@ -6,26 +6,32 @@ import { existsSync } from "node:fs";
 import { applyGate1Decision, ResolutionError } from "./resolve.mjs";
 import { checkAdmission, Status } from "./admission.mjs";
 import { readJson } from "./mapper.mjs";
+import { readGate1Form } from "./gate1Form.mjs";
 
-const PRESENT = existsSync("./draft-gate1-packet.json")
-  && existsSync("./gate1-decision.example.json");
+const FORM = "./Gate1-Review-Form-COMPLETED.xlsx";
+const PRESENT = existsSync("./draft-gate1-packet.json") && existsSync(FORM);
 const skip = !PRESENT && "case files not in this folder";
 
-const loadPair = () => [readJson("./draft-gate1-packet.json"),
-                        readJson("./gate1-decision.example.json")];
+// The decision comes from the signed workbook, which is the only way one is
+// produced. There is no JSON fixture, because there is no JSON path.
+const loadPair = () => {
+  const packet = readJson("./draft-gate1-packet.json");
+  return [packet, readGate1Form(FORM, packet)];
+};
 
 const named = (d) => {
   const c = structuredClone(d);
   c.reviewer_id = "Test Reviewer";
-  for (const r of c.exception_resolutions) r.resolved_by = "Test Reviewer";
-  for (const r of c.hard_exclusion_resolutions) r.resolved_by = "Test Sanctions";
+  for (const r of c.exception_resolutions) r.reviewer_id = "Test Reviewer";
+  for (const r of c.hard_exclusion_resolutions) r.reviewer_id = "Test Sanctions";
   return c;
 };
 
 test("a placeholder name is refused", { skip }, () => {
   const [packet, decision] = loadPair();
-  // The example ships with bracketed placeholders on purpose.
-  assert.throws(() => applyGate1Decision(packet, decision),
+  const placeheld = structuredClone(decision);
+  placeheld.exception_resolutions[0].reviewer_id = "[name]";
+  assert.throws(() => applyGate1Decision(packet, placeheld),
     (e) => e instanceof ResolutionError && /placeholder/.test(e.message));
 });
 
@@ -40,7 +46,7 @@ test("a decision for the wrong case is refused", { skip }, () => {
 test("UNKNOWN is not a valid resolution for a hard exclusion", { skip }, () => {
   const [packet, decision] = loadPair();
   const bad = named(decision);
-  bad.hard_exclusion_resolutions[0].status = "UNKNOWN";
+  bad.hard_exclusion_resolutions[0].resolution = "UNKNOWN";
   assert.throws(() => applyGate1Decision(packet, bad),
     (e) => e instanceof ResolutionError && /what we are resolving/.test(e.message));
 });
@@ -56,11 +62,12 @@ test("a hard exclusion resolution must say where it came from", { skip }, () => 
 test("a complete decision clears the open items and records who cleared them", { skip }, () => {
   const [packet, decision] = loadPair();
   const { resolved, applied } = applyGate1Decision(packet, named(decision));
-  assert.equal(applied.length, 3);
+  // Two exceptions, three hard exclusions, and the Gate 1 status itself.
+  assert.equal(applied.length, 6);
   const hex3 = resolved.hard_exclusion_candidates
     .find((h) => h.hard_exclusion_candidate_id === "HEX-0003");
   assert.equal(hex3.status, "NOT_TRIGGERED");
-  assert.equal(hex3.resolution.resolved_by, "Test Sanctions");
+  assert.equal(hex3.resolution.reviewer_id, "Test Sanctions");
   const exc2 = resolved.exceptions_and_missing_information
     .find((e) => e.exception_id === "EXC-0002");
   assert.equal(exc2.blocking, false);

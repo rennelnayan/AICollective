@@ -13,10 +13,83 @@
     "gate_1_status": "APPROVED_FOR_SCORING",
     "reviewer_role": "Financial Crime Analyst",
     "reviewer_id": "R. Nayan",
-    "decision_date": "2026-10-03",
-    "reviewer_comments": "Identity matched across both instruments. Evidence reviewed per the resolutions below. No material contradiction between the scoping form and the respondent submission.",
+    "decision_date": "2026-10-05",
+    "reviewer_comments": "Respondent identity matched across the scoping form and the CBDDQ. No material contradiction found between the two instruments. All six factor anchors trace to source records in the exhaustive register. Open items resolved as recorded below.",
     "approved_indicator_ids": null,
     "excluded_indicator_ids": null
+  },
+  "gate_1_source_document": "./Gate1-Review-Form-COMPLETED.xlsx",
+  "gate_1_resolutions": {
+    "reviewer_comments": "Respondent identity matched across the scoping form and the CBDDQ. No material contradiction found between the two instruments. All six factor anchors trace to source records in the exhaustive register. Open items resolved as recorded below.",
+    "exception_resolutions": [
+      {
+        "exception_id": "EXC-0001",
+        "resolution": "CORRECTED",
+        "reviewer_role": "Financial Crime Analyst",
+        "reviewer_id": "R. Nayan",
+        "resolution_date": "2026-10-05",
+        "rationale": "Mapping catalogue 1.1.0 anchors all six factors from the exhaustive source register. Each anchor verified to trace to a source record ID and workbook cell reference. Candidate indicator count is now six, not zero.",
+        "evidence_reviewed": [
+          "mapping.rules.v1.1.json"
+        ],
+        "control_evidence_status": null
+      },
+      {
+        "exception_id": "EXC-0002",
+        "resolution": "REVIEWED",
+        "reviewer_role": "Financial Crime Analyst",
+        "reviewer_id": "R. Nayan",
+        "resolution_date": "2026-10-04",
+        "rationale": "All six respondent-supplied documents reviewed for authenticity, scope, currency and relevance. Documents are internally consistent and current. No independent assurance report was supplied, so control domains remain at the self-asserted tier.",
+        "evidence_reviewed": [
+          "EV-004",
+          "EV-005",
+          "EV-006",
+          "EV-007",
+          "EV-008",
+          "EV-009"
+        ],
+        "control_evidence_status": "PROVIDED_NOT_INDEPENDENTLY_VERIFIED"
+      }
+    ],
+    "hard_exclusion_resolutions": [
+      {
+        "hard_exclusion_id": "HEX-0001",
+        "exclusion_rule_id": "SHELL_BANK",
+        "resolution": "NOT_TRIGGERED",
+        "reviewer_role": "Sanctions Operations",
+        "reviewer_id": "K. Alvarez",
+        "resolution_date": "2026-10-02",
+        "rationale": "Respondent maintains verifiable physical presence in the United Kingdom, holds an active PRA banking licence, and is affiliated with a regulated financial group. Does not meet the FATF Glossary definition of a shell bank.",
+        "determination_source": "Provider shell-bank determination from registered address, primary business address, banking licence status and group affiliation",
+        "list_version": "SANCTIONS-LIST-2026-09",
+        "jurisdiction_list_version": "JURISDICTION-LIST-2026-09"
+      },
+      {
+        "hard_exclusion_id": "HEX-0002",
+        "exclusion_rule_id": "DOWNSTREAM_SHELL_BANK_EXPOSURE",
+        "resolution": "NOT_TRIGGERED",
+        "reviewer_role": "Sanctions Operations",
+        "reviewer_id": "K. Alvarez",
+        "resolution_date": "2026-10-02",
+        "rationale": "Respondent does not permit respondent banks to use the account and does not allow nested relationships. No downstream shell bank exposure.",
+        "determination_source": "Provider downstream-relationship check against CBDDQ Q19, Q19a and Q19a1f",
+        "list_version": "SANCTIONS-LIST-2026-09",
+        "jurisdiction_list_version": "JURISDICTION-LIST-2026-09"
+      },
+      {
+        "hard_exclusion_id": "HEX-0003",
+        "exclusion_rule_id": "COMPREHENSIVELY_SANCTIONED_PRESENCE",
+        "resolution": "NOT_TRIGGERED",
+        "reviewer_role": "Sanctions Operations",
+        "reviewer_id": "K. Alvarez",
+        "resolution_date": "2026-10-02",
+        "rationale": "No branches, subsidiaries or representative offices in any jurisdiction subject to comprehensive UN, OFAC, OFSI, EU or G7 sanctions. United Kingdom operations only. Determination made from provider-maintained lists, not from respondent answers.",
+        "determination_source": "Provider sanctions screening against the maintained comprehensively sanctioned jurisdiction list, run independently of the respondent submission",
+        "list_version": "SANCTIONS-LIST-2026-09",
+        "jurisdiction_list_version": "JURISDICTION-LIST-2026-09"
+      }
+    ]
   },
   "validation_provenance": {
     "validator_version": "1.0.2",

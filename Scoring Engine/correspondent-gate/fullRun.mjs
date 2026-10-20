@@ -4,6 +4,7 @@ import { existsSync, writeFileSync } from "node:fs";
 import { checkAdmission, render } from "./admission.mjs";
 import { mapFactors, readJson } from "./mapper.mjs";
 import { applyGate1Decision } from "./resolve.mjs";
+import { readGate1Form, FormError } from "./gate1Form.mjs";
 import { ScoringConfig, score, explain } from "./scoring.mjs";
 
 let packet        = readJson("./draft-gate1-packet.json");
@@ -31,15 +32,29 @@ for (const exc of packet.exceptions_and_missing_information ?? []) {
 }
 
 // A human Gate 1 decision, if one has been recorded.
-const DECISION = "./gate1-decision.json";
-if (existsSync(DECISION)) {
-  const { resolved, applied } = applyGate1Decision(packet, readJson(DECISION));
+//
+// The signed workbook is the decision record. It is read directly rather than
+// via a JSON intermediate, so what the engine acts on is exactly what the
+// reviewer signed - nothing can be edited in between.
+const FORM = "./Gate1-Review-Form-COMPLETED.xlsx";
+let gate1Decision = null;
+
+if (existsSync(FORM)) {
+  try {
+    gate1Decision = readGate1Form(FORM, packet);
+  } catch (err) {
+    if (!(err instanceof FormError)) throw err;
+    console.error(`\n${FORM} is not complete:\n\n  ${err.message}\n`);
+    process.exit(1);
+  }
+  const { resolved, applied } = applyGate1Decision(packet, gate1Decision);
   packet = resolved;
-  console.log("Gate 1 decision applied:");
+  console.log(`Gate 1 decision read from ${FORM}:`);
   for (const a of applied) console.log(`  - ${a}`);
   console.log();
 } else {
-  console.log(`No ${DECISION} found. Running against the undecided draft.\n`);
+  console.log(`No ${FORM} found. Running against the undecided draft.`);
+  console.log("Complete Gate1-Review-Form.xlsx, save it under that name, and rerun.\n");
 }
 
 const admission = checkAdmission(packet, validation);
@@ -64,6 +79,14 @@ writeFileSync("scoring_output.json", JSON.stringify({
   gate1_review_allowed: admission.gate1ReviewAllowed,
   business_readiness: admission.businessReadiness,
   gate_1_decision: packet.gate_1_decision_section,
+  gate_1_source_document: gate1Decision ? FORM : null,
+  gate_1_resolutions: gate1Decision
+    ? {
+        reviewer_comments: gate1Decision.reviewer_comments,
+        exception_resolutions: gate1Decision.exception_resolutions,
+        hard_exclusion_resolutions: gate1Decision.hard_exclusion_resolutions,
+      }
+    : null,
   validation_provenance: admission.provenance,
   open_blockers: admission.blockers.map((b) => ({ code: b.code, source: b.source })),
   risk_model_version: result.configVersion,

@@ -1,0 +1,31 @@
+{
+  "schema_name": "GATE2_DECISION",
+  "schema_version": "1.0.0",
+  "case_id": "CG-CASE-HP-002",
+  "run_id": "CG-RUN-HP-002",
+  "_note": "Written by the human reviewer at Gate 2, never generated. Set decision to ACCEPT, OVERRIDE or REMAND and fill the matching block. The other blocks are ignored.",
+
+  "gate_2_decision_id": "GATE2-HP-002-001",
+  "decision": "ACCEPT",
+  "reviewer_id": "[name or staff id]",
+  "reviewer_role": "Financial Crime Analyst",
+  "decision_date": "2026-10-03",
+
+  "_version_check": "Must match the score being reviewed, or the engine refuses. Stops silent config drift between scoring and review.",
+  "reviewed_risk_model_version": "v0.1",
+  "reviewed_mapping_version": "1.1.0",
+
+  "reviewer_comments": "Factor anchors traced to source records and agree with the workbooks. Control tiers consistent with the evidence status recorded at Gate 1.",
+
+  "_if_decision_is_OVERRIDE": "the facts are right but the conclusion is wrong",
+  "override_category": "CONTEXT_NOT_CAPTURED_BY_MODEL",
+  "override_band": "Moderate",
+  "machine_band_index": 0,
+  "override_band_index": 1,
+  "affected_factor_ids": ["F5"],
+  "rationale": "Replace with at least 50 characters explaining what the model could not see and why the band should move. An override that cannot be explained cannot be defended to an examiner.",
+
+  "_if_decision_is_REMAND": "a fact is wrong - this is a Gate 1 failure, not an override",
+  "remand_reason": "EXTRACTED_VALUE_DOES_NOT_MATCH_SOURCE",
+  "disputed_source_record_ids": ["SRC-CBDDQ-19"]
+}
