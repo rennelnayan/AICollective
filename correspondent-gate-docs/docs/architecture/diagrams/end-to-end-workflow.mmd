@@ -1,0 +1,59 @@
+%% End-to-end workflow: intake through scoring to human decision
+%% Render: mmdc -i end-to-end-workflow.mmd -o end-to-end-workflow.png
+
+flowchart TD
+    subgraph INPUT[" Case materials "]
+        CB["CBDDQ workbook<br/>respondent submits"]
+        SC["Relationship scoping workbook<br/>provider completes"]
+    end
+
+    subgraph COPILOT[" Probabilistic — Microsoft 365 Copilot "]
+        IA["CG Intake Analyzer<br/>Configuration 7"]
+        P1["Part 1<br/>semantic artifacts"]
+        P2["Part 2<br/>draft Gate 1 packet"]
+        PKG["draft_gate1_package.md<br/>14 blocks, unaltered"]
+    end
+
+    subgraph VALIDATOR[" Deterministic — Node.js validator "]
+        REG["exhaustive source register<br/>canonical IDs"]
+        VAL["17 contract checks"]
+        RPT["deterministic validation report"]
+    end
+
+    subgraph ENGINE[" Deterministic — scoring engine "]
+        MAP["mapper.mjs<br/>rules to anchors"]
+        ADM["admission.mjs<br/>four statuses"]
+        SCO["scoring.mjs<br/>residual and band"]
+    end
+
+    subgraph HUMAN[" Human authority "]
+        G1["Gate 1<br/>do the facts match the documents?"]
+        G2["Gate 2<br/>is the assessment right?"]
+        G3["Gate 3 — committee<br/>NOT YET SPECIFIED"]
+    end
+
+    CB --> IA
+    SC --> IA
+    IA --> P1 --> PKG
+    IA --> P2 --> PKG
+    PKG --> VAL
+    CB --> REG
+    SC --> REG
+    REG --> VAL --> RPT
+    REG --> MAP --> ADM
+    RPT --> ADM
+    G1 -- "signed review workbook" --> ADM
+    ADM -- "AUTHORISED" --> SCO
+    ADM -- "NOT_AUTHORISED" --> G1
+    SCO --> G2
+    G2 -- "remand" --> G1
+    G2 -- "High or Prohibited band" --> G3
+
+    classDef prob fill:#C2703D,stroke:#8A4E22,color:#FFF6EE
+    classDef det fill:#0F2235,stroke:#0A1724,color:#F8F7F3
+    classDef hum fill:#0E7C7B,stroke:#0A6665,color:#F3FAF9
+    classDef stub fill:#E4E0D7,stroke:#B9B2A4,color:#3C4A58,stroke-dasharray: 5 5
+    class IA,P1,P2,PKG prob
+    class REG,VAL,RPT,MAP,ADM,SCO det
+    class G1,G2 hum
+    class G3 stub

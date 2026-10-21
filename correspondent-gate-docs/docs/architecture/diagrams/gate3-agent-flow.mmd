@@ -1,0 +1,15 @@
+%% Gate 3 agent flow
+%% STUB — not yet designed. See ai/gate3-packet-agent/README.md
+
+flowchart TD
+    IN["Scoring output<br/>band High or Prohibited"]
+    Q1["What does the agent produce?"]
+    Q2["What does it read?"]
+    Q3["What is it forbidden to do,<br/>and what checks that?"]
+    Q4["What is the committee<br/>decision record?"]
+    OUT["Committee decision"]
+
+    IN --> Q1 --> Q2 --> Q3 --> Q4 --> OUT
+
+    classDef open fill:#E4E0D7,stroke:#B9B2A4,color:#3C4A58,stroke-dasharray: 5 5
+    class Q1,Q2,Q3,Q4 open
