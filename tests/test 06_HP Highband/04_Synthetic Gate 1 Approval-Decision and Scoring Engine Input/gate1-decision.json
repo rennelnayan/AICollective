@@ -1,0 +1,47 @@
+{
+  "schema_name": "GATE1_DECISION",
+  "schema_version": "1.0.0",
+  "case_id": "CG-CASE-HP-002",
+  "run_id": "CG-RUN-HP-002",
+  "gate_1_decision_id": "GATE1-HP-002-001",
+  "reviewer_id": "R. Nayan",
+  "reviewer_role": "Financial Crime Analyst",
+  "decision_date": "2026-10-26",
+  "gate_1_status": "APPROVED_FOR_SCORING",
+  "reviewer_comments": "Synthetic happy-path decision. Case and run identities match; EV-001 through EV-016 are recorded as provided and verified for synthetic QA; source indicators are traceable; HEX-0002 and HEX-0003 are resolved as NOT_TRIGGERED using controlled synthetic QA sources. Not for operational reliance.",
+  "list_version": "SANCTIONS-LIST-SYNTHETIC-2026-10",
+  "jurisdiction_list_version": "JURISDICTION-LIST-SYNTHETIC-2026-10",
+  "approved_indicator_ids": [
+    "SRC-CBDDQ-2",
+    "SRC-CBDDQ-13",
+    "SRC-CBDDQ-6",
+    "SRC-CBDDQ-17",
+    "SRC-CBDDQ-19",
+    "SRC-SCOPE-S23",
+    "SRC-CBDDQ-22",
+    "SRC-CBDDQ-62",
+    "SRC-CBDDQ-98",
+    "SRC-CBDDQ-49D",
+    "SRC-SCOPE-S34"
+  ],
+  "excluded_indicator_ids": [],
+  "_source": "gate1-decision.json",
+  "_classification": "SYNTHETIC_QA_ONLY",
+  "hard_exclusion_resolutions": [
+    {
+      "hard_exclusion_candidate_id": "HEX-0002",
+      "status": "NOT_TRIGGERED",
+      "resolved_by": "R. Nayan",
+      "determination_source": "CG-RUN-HP-002 synthetic downstream-use restriction review; SRC-SCOPE-S26; SRC-SCOPE-S27; SRC-SCOPE-S48; SRC-SCOPE-S49; SRC-SCOPE-S50",
+      "rationale": "Synthetic QA review confirmed that downstream use, nesting, and payable-through access are prohibited and controlled. DOWNSTREAM_SHELL_BANK_EXPOSURE is NOT_TRIGGERED for this synthetic run."
+    },
+    {
+      "hard_exclusion_candidate_id": "HEX-0003",
+      "status": "NOT_TRIGGERED",
+      "resolved_by": "R. Nayan",
+      "determination_source": "SANCTIONS-LIST-SYNTHETIC-2026-10; JURISDICTION-LIST-SYNTHETIC-2026-10; CG-RUN-HP-002 synthetic jurisdiction and corridor screening",
+      "rationale": "Synthetic QA controlled-list screening found no comprehensively sanctioned presence in the respondent jurisdiction or expected corridors. COMPREHENSIVELY_SANCTIONED_PRESENCE is NOT_TRIGGERED for this synthetic run."
+    }
+  ],
+  "exception_resolutions": []
+}
