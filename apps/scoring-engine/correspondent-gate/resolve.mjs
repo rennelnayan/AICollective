@@ -23,35 +23,34 @@ export function applyGate1Decision(packet, decision) {
   for (const exc of resolved.exceptions_and_missing_information ?? []) {
     const r = excResolutions.get(exc.exception_id);
     if (!r) continue;
-    if (!r.reviewer_id || r.reviewer_id.startsWith("[")) {
+    if (!r.resolved_by || r.resolved_by.startsWith("[")) {
       throw new ResolutionError(
-        `${exc.exception_id}: reviewer_id is a placeholder. A resolution needs a named human.`);
+        `${exc.exception_id}: resolved_by is a placeholder. A resolution needs a named human.`);
     }
     exc.blocking = false;
     exc.resolution = r;
-    applied.push(`${exc.exception_id} -> ${r.resolution} by ${r.reviewer_id} (${r.reviewer_role})`);
+    applied.push(`${exc.exception_id} -> ${r.resolution} by ${r.resolved_by}`);
   }
 
   // Hard exclusions: only a human may move one off UNKNOWN.
   const hexResolutions = new Map(
-    (decision.hard_exclusion_resolutions ?? []).map((r) => [r.hard_exclusion_id, r]));
+    (decision.hard_exclusion_resolutions ?? []).map((r) => [r.hard_exclusion_candidate_id, r]));
   for (const hx of resolved.hard_exclusion_candidates ?? []) {
     const r = hexResolutions.get(hx.hard_exclusion_candidate_id);
     if (!r) continue;
-    if (!["NOT_TRIGGERED", "TRIGGERED"].includes(r.resolution)) {
+    if (!["NOT_TRIGGERED", "TRIGGERED"].includes(r.status)) {
       throw new ResolutionError(
         `${hx.hard_exclusion_candidate_id}: a resolution must be NOT_TRIGGERED or ` +
-        `TRIGGERED, got ${r.resolution}. UNKNOWN is what we are resolving, not a resolution.`);
+        `TRIGGERED, got ${r.status}. UNKNOWN is what we are resolving, not a resolution.`);
     }
     if (!r.determination_source) {
       throw new ResolutionError(
         `${hx.hard_exclusion_candidate_id}: determination_source is required. ` +
         "A hard exclusion determination must say where it came from.");
     }
-    hx.status = r.resolution;
+    hx.status = r.status;
     hx.resolution = r;
-    applied.push(`${hx.hard_exclusion_candidate_id} -> ${r.resolution} by ` +
-                 `${r.reviewer_id} (${r.reviewer_role})`);
+    applied.push(`${hx.hard_exclusion_candidate_id} -> ${r.status} by ${r.resolved_by}`);
   }
 
   resolved.gate_1_decision_section = {

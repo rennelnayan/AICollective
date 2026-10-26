@@ -1,0 +1,485 @@
+{
+  "catalog_type": "APPROVED_MAPPING_CATALOG",
+  "catalog_version": "1.1.0",
+  "mapping_version": "1.1.0",
+  "risk_model_version": "0.1",
+  "catalog_status": "APPROVED_FOR_HACKATHON_SYNTHETIC_USE",
+  "scope": "Project Correspondent Gate synthetic HP-002 positive-path demonstration only",
+  "owner_role": "Risk Model Owner",
+  "approved_by_role": "Hackathon Risk Model Owner",
+  "approved_on": "2026-10-25",
+  "review_required_before_production": true,
+  "supersedes": "approved_mapping_catalog_v1.0.0.json",
+  "change_summary": [
+    "Uses source field IDs exactly as emitted by the exhaustive source register.",
+    "Adds complete F1-F6 coverage for the HP-002 synthetic dataset.",
+    "Adds control-source mappings for C1-C4.",
+    "Adds deterministic precedence: highest matching anchor per factor wins.",
+    "Retains fail-closed handling for unmapped, ambiguous, unknown, and conflicted values."
+  ],
+  "default_behavior": {
+    "no_exact_rule": "UNMAPPED_FACT",
+    "multiple_exact_rules": "HIGHEST_MATCHING_ANCHOR_WINS",
+    "unknown_source_value": "PRESERVE_UNKNOWN",
+    "conflicted_source_value": "PRESERVE_CONFLICTED",
+    "gate_1_status": "PENDING_GATE_1",
+    "scoring_allowed": false
+  },
+  "allowed_source_workbooks": [
+    "CBDDQ",
+    "RELATIONSHIP_SCOPING"
+  ],
+  "allowed_target_model_areas": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "HARD_EXCLUSION",
+    "CONTRADICTION"
+  ],
+  "candidate_id_format": "IND-{target_model_area}-{mapping_rule_id}",
+  "rules": [
+    {
+      "mapping_rule_id": "MAP-F1-CBDDQ-2-NOTIN-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "2",
+      "source_field_name": "Country of incorporation",
+      "condition": {
+        "operator": "NOT_IN",
+        "normalized_values": [
+          "United Kingdom",
+          "United States",
+          "Germany",
+          "France",
+          "Singapore",
+          "Switzerland",
+          "Japan",
+          "Canada",
+          "Australia"
+        ]
+      },
+      "target_model_area": "F1",
+      "target_indicator_id": "JURISDICTION_OUTSIDE_MAINTAINED_MEMBER_LIST",
+      "anchor": 6,
+      "materiality": "HIGH",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Jurisdiction outside the maintained synthetic member list."
+    },
+    {
+      "mapping_rule_id": "MAP-F1-CBDDQ-2-IN-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "2",
+      "source_field_name": "Country of incorporation",
+      "condition": {
+        "operator": "IN",
+        "normalized_values": [
+          "United Kingdom",
+          "United States",
+          "Germany",
+          "France",
+          "Singapore",
+          "Switzerland",
+          "Japan",
+          "Canada",
+          "Australia"
+        ]
+      },
+      "target_model_area": "F1",
+      "target_indicator_id": "JURISDICTION_IN_MAINTAINED_MEMBER_LIST",
+      "anchor": 0,
+      "materiality": "MEDIUM",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Jurisdiction in the maintained synthetic member list."
+    },
+    {
+      "mapping_rule_id": "MAP-F2-CBDDQ-13-CONTAINS-ACTION-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "13",
+      "source_field_name": "Banking license status",
+      "condition": {
+        "operator": "CONTAINS",
+        "normalized_values": [
+          "AML supervisory action"
+        ]
+      },
+      "target_model_area": "F2",
+      "target_indicator_id": "OPEN_OR_UNVERIFIED_SUPERVISORY_ACTION",
+      "anchor": 10,
+      "materiality": "HIGH",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Disclosed supervisory action without verified closure detail."
+    },
+    {
+      "mapping_rule_id": "MAP-F2-CBDDQ-13-EQ-ACTIVE-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "13",
+      "source_field_name": "Banking license status",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          "ACTIVE"
+        ]
+      },
+      "target_model_area": "F2",
+      "target_indicator_id": "ACTIVE_LICENSE_NO_OPEN_ACTION",
+      "anchor": 0,
+      "materiality": "MEDIUM",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Active licence with no additional adverse qualifier."
+    },
+    {
+      "mapping_rule_id": "MAP-F3-CBDDQ-16-YES-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "16",
+      "source_field_name": "Bearer shares",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          true,
+          "YES"
+        ]
+      },
+      "target_model_area": "F3",
+      "target_indicator_id": "BEARER_SHARES_PRESENT",
+      "anchor": 10,
+      "materiality": "HIGH",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Bearer shares asserted."
+    },
+    {
+      "mapping_rule_id": "MAP-F3-CBDDQ-6-NO-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "6",
+      "source_field_name": "Publicly traded",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          false,
+          "NO"
+        ]
+      },
+      "target_model_area": "F3",
+      "target_indicator_id": "PRIVATELY_HELD",
+      "anchor": 3,
+      "materiality": "MEDIUM",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Privately held institution; ownership review required."
+    },
+    {
+      "mapping_rule_id": "MAP-F3-CBDDQ-6-YES-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "6",
+      "source_field_name": "Publicly traded",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          true,
+          "YES"
+        ]
+      },
+      "target_model_area": "F3",
+      "target_indicator_id": "PUBLICLY_TRADED",
+      "anchor": 0,
+      "materiality": "LOW",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Publicly traded institution."
+    },
+    {
+      "mapping_rule_id": "MAP-F4-CBDDQ-18-YES-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "18",
+      "source_field_name": "Shell bank",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          true,
+          "YES"
+        ]
+      },
+      "target_model_area": "F4",
+      "target_indicator_id": "SHELL_BANK_ASSERTED",
+      "anchor": 10,
+      "materiality": "CRITICAL",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Shell-bank assertion; hard-exclusion review also required."
+    },
+    {
+      "mapping_rule_id": "MAP-F4-CBDDQ-17-YES-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "17",
+      "source_field_name": "Physical presence",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          true,
+          "YES"
+        ]
+      },
+      "target_model_area": "F4",
+      "target_indicator_id": "PHYSICAL_PRESENCE_ASSERTED",
+      "anchor": 0,
+      "materiality": "MEDIUM",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Physical presence asserted; verification remains required."
+    },
+    {
+      "mapping_rule_id": "MAP-F4-CBDDQ-17-NO-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "17",
+      "source_field_name": "Physical presence",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          false,
+          "NO"
+        ]
+      },
+      "target_model_area": "F4",
+      "target_indicator_id": "NO_PHYSICAL_PRESENCE",
+      "anchor": 10,
+      "materiality": "CRITICAL",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "No physical presence."
+    },
+    {
+      "mapping_rule_id": "MAP-F5-CBDDQ-19-YES-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "19",
+      "source_field_name": "Respondent banks permitted to use account",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          true,
+          "YES"
+        ]
+      },
+      "target_model_area": "F5",
+      "target_indicator_id": "RESPONDENT_BANK_USE_PERMITTED",
+      "anchor": 10,
+      "materiality": "HIGH",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Respondent-bank use introduces downstream correspondent exposure and requires Gate 1 treatment confirmation."
+    },
+    {
+      "mapping_rule_id": "MAP-F5-CBDDQ-19A-YES-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "19A",
+      "source_field_name": "Nested relationships offered",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          true,
+          "YES"
+        ]
+      },
+      "target_model_area": "F5",
+      "target_indicator_id": "NESTED_RELATIONSHIPS_OFFERED",
+      "anchor": 6,
+      "materiality": "HIGH",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Nested relationships offered."
+    },
+    {
+      "mapping_rule_id": "MAP-F5-CBDDQ-20-YES-001",
+      "status": "ACTIVE",
+      "source_workbook": "CBDDQ",
+      "source_party": "RESPONDENT_INSTITUTION",
+      "source_field_id": "20",
+      "source_field_name": "Payable-through arrangements offered",
+      "condition": {
+        "operator": "EQUALS",
+        "normalized_values": [
+          true,
+          "YES"
+        ]
+      },
+      "target_model_area": "F5",
+      "target_indicator_id": "PAYABLE_THROUGH_ACCESS",
+      "anchor": 10,
+      "materiality": "HIGH",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Payable-through arrangements offered."
+    },
+    {
+      "mapping_rule_id": "MAP-F6-SCOPE-S23-NOTCONTAINS-001",
+      "status": "ACTIVE",
+      "source_workbook": "RELATIONSHIP_SCOPING",
+      "source_party": "PROVIDER_INSTITUTION",
+      "source_field_id": "S23",
+      "source_field_name": "Expected customer types",
+      "condition": {
+        "operator": "NOT_CONTAINS",
+        "normalized_values": [
+          "Regulated corporate and institutional"
+        ]
+      },
+      "target_model_area": "F6",
+      "target_indicator_id": "CUSTOMER_BASE_NOT_LIMITED_TO_REGULATED_COUNTERPARTIES",
+      "anchor": 6,
+      "materiality": "HIGH",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Customer base includes higher-risk or non-regulated categories."
+    },
+    {
+      "mapping_rule_id": "MAP-F6-SCOPE-S23-CONTAINS-001",
+      "status": "ACTIVE",
+      "source_workbook": "RELATIONSHIP_SCOPING",
+      "source_party": "PROVIDER_INSTITUTION",
+      "source_field_id": "S23",
+      "source_field_name": "Expected customer types",
+      "condition": {
+        "operator": "CONTAINS",
+        "normalized_values": [
+          "Regulated corporate and institutional"
+        ]
+      },
+      "target_model_area": "F6",
+      "target_indicator_id": "REGULATED_INSTITUTIONAL_CUSTOMER_BASE",
+      "anchor": 3,
+      "materiality": "MEDIUM",
+      "human_review_required": true,
+      "source_fact_ids_required": true,
+      "source_references_required": true,
+      "basis": "Customer base limited to regulated corporate and institutional counterparties."
+    }
+  ],
+  "control_rules": [
+    {
+      "control_domain": "C1",
+      "assertion": {
+        "workbook": "CBDDQ",
+        "source_field_id": "22"
+      },
+      "verification": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "source_field_id": "S34"
+      }
+    },
+    {
+      "control_domain": "C2",
+      "assertion": {
+        "workbook": "CBDDQ",
+        "source_field_id": "62"
+      },
+      "verification": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "source_field_id": "S34"
+      }
+    },
+    {
+      "control_domain": "C3",
+      "assertion": {
+        "workbook": "CBDDQ",
+        "source_field_id": "98"
+      },
+      "verification": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "source_field_id": "S34"
+      }
+    },
+    {
+      "control_domain": "C4",
+      "assertion": {
+        "workbook": "CBDDQ",
+        "source_field_id": "49D"
+      },
+      "verification": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "source_field_id": "S34"
+      }
+    }
+  ],
+  "evidence_tier_logic": {
+    "VERIFIED_INDEPENDENT": {
+      "tier": "Independently evidenced",
+      "multiplier": 0.85
+    },
+    "VERIFIED": {
+      "tier": "Partially evidenced",
+      "multiplier": 0.9
+    },
+    "PENDING_HUMAN_REVIEW": {
+      "tier": "Self-asserted only",
+      "multiplier": 0.94
+    },
+    "ASSERTION_NO_OR_UNANSWERED": {
+      "tier": "Absent or unanswered",
+      "multiplier": 1.0
+    }
+  },
+  "validation_rules": [
+    "mapping_rule_id must be unique",
+    "an ACTIVE rule must use an allowed source workbook",
+    "target_model_area must be allowed",
+    "every generated candidate must include indicator_id, mapping_rule_id, target_model_area, anchor, source_fact_ids, and source references",
+    "candidate gate_1_status must be PENDING_GATE_1",
+    "highest matching anchor per factor wins",
+    "an unmapped required factor must emit UNMAPPED_FACT and block scoring authorization",
+    "an ambiguous same-priority match must emit AMBIGUOUS_MAPPING and block scoring authorization",
+    "the intake analyzer must not calculate totals, scores, bands, approvals, or scoring authorization"
+  ],
+  "limitations": [
+    "Synthetic HP-002 demonstration only.",
+    "This revision is not approved for production use.",
+    "Gate 1 must still resolve blocking exceptions and approve generated candidate indicators before scoring.",
+    "The maintained jurisdiction list is synthetic and must be replaced by a governed production source."
+  ]
+}

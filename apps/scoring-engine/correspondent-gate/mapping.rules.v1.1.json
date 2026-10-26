@@ -1,64 +1,254 @@
 {
   "mapping_version": "1.1.0",
   "risk_model_version": "0.1",
-  "_note": "Closes EXC-0001. Rules key on question_or_field_id exactly as the exhaustive source register emits them, so no workbook change is required. Each rule names the source party, the condition, and the anchor it sets. Highest matching anchor per factor wins.",
+  "status": "HACKATHON_SYNTHETIC_APPROVED",
+  "supersedes": "mapping.rules.v1.1.json",
+  "change_summary": [
+    "Adds an exact F5 mapping for CBDDQ question 19 = YES so the HP-HIGH-G3 dataset produces a traceable F5 anchor.",
+    "Replaces the broad F2 not-equal fallback with explicit ACTIVE and AML-supervisory-action rules.",
+    "Preserves the engine-native factor_rules, control_rules, operator, and evidence-tier structure consumed by mapper.mjs.",
+    "Retains deterministic highest-matching-anchor-wins behavior."
+  ],
+  "_note": "Hackathon synthetic mapping rules. Rules key on question_or_field_id exactly as the exhaustive source register emits them. Highest matching anchor per factor wins. This file is compatible with mapper.mjs.",
   "factor_rules": {
     "F1": [
-      {"rule_id": "F1-R1", "workbook": "CBDDQ", "field": "2", "op": "in",
-       "values": ["United Kingdom", "United States", "Germany", "France", "Singapore", "Switzerland", "Japan", "Canada", "Australia"],
-       "anchor": 0, "basis": "FATF member jurisdiction of incorporation"},
-      {"rule_id": "F1-R2", "workbook": "CBDDQ", "field": "2", "op": "not_in",
-       "values": ["United Kingdom", "United States", "Germany", "France", "Singapore", "Switzerland", "Japan", "Canada", "Australia"],
-       "anchor": 6, "basis": "Jurisdiction outside the maintained FATF member list"}
+      {
+        "rule_id": "F1-R1",
+        "workbook": "CBDDQ",
+        "field": "2",
+        "op": "in",
+        "values": [
+          "United Kingdom",
+          "United States",
+          "Germany",
+          "France",
+          "Singapore",
+          "Switzerland",
+          "Japan",
+          "Canada",
+          "Australia"
+        ],
+        "anchor": 0,
+        "basis": "Jurisdiction of incorporation is in the maintained synthetic member list"
+      },
+      {
+        "rule_id": "F1-R2",
+        "workbook": "CBDDQ",
+        "field": "2",
+        "op": "not_in",
+        "values": [
+          "United Kingdom",
+          "United States",
+          "Germany",
+          "France",
+          "Singapore",
+          "Switzerland",
+          "Japan",
+          "Canada",
+          "Australia"
+        ],
+        "anchor": 6,
+        "basis": "Jurisdiction of incorporation is outside the maintained synthetic member list"
+      }
     ],
     "F2": [
-      {"rule_id": "F2-R1", "workbook": "CBDDQ", "field": "13", "op": "eq", "values": ["ACTIVE"],
-       "anchor": 0, "basis": "Banking licence active and regulator named"},
-      {"rule_id": "F2-R2", "workbook": "CBDDQ", "field": "13", "op": "ne", "values": ["ACTIVE"],
-       "anchor": 10, "basis": "Licence not active or not stated"}
+      {
+        "rule_id": "F2-R1",
+        "workbook": "CBDDQ",
+        "field": "13",
+        "op": "eq",
+        "values": [
+          "ACTIVE"
+        ],
+        "anchor": 0,
+        "basis": "Banking licence is active with no adverse qualifier in the normalized value"
+      },
+      {
+        "rule_id": "F2-R2",
+        "workbook": "CBDDQ",
+        "field": "13",
+        "op": "contains",
+        "values": [
+          "AML supervisory action"
+        ],
+        "anchor": 10,
+        "basis": "AML supervisory action is disclosed and closure or resolution must be verified"
+      }
     ],
     "F3": [
-      {"rule_id": "F3-R1", "workbook": "CBDDQ", "field": "16", "op": "eq", "values": ["YES"],
-       "anchor": 10, "basis": "Bearer shares in issue, FATF Rec 33"},
-      {"rule_id": "F3-R2", "workbook": "CBDDQ", "field": "6", "op": "eq", "values": ["YES"],
-       "anchor": 0, "basis": "Publicly traded, FATF IN Rec 5 para 10"},
-      {"rule_id": "F3-R3", "workbook": "CBDDQ", "field": "6", "op": "eq", "values": ["NO"],
-       "anchor": 3, "basis": "Privately held with parent disclosed and no bearer shares"}
+      {
+        "rule_id": "F3-R1",
+        "workbook": "CBDDQ",
+        "field": "16",
+        "op": "eq",
+        "values": [
+          "YES"
+        ],
+        "anchor": 10,
+        "basis": "Bearer shares are in issue"
+      },
+      {
+        "rule_id": "F3-R2",
+        "workbook": "CBDDQ",
+        "field": "6",
+        "op": "eq",
+        "values": [
+          "YES"
+        ],
+        "anchor": 0,
+        "basis": "Institution is publicly traded"
+      },
+      {
+        "rule_id": "F3-R3",
+        "workbook": "CBDDQ",
+        "field": "6",
+        "op": "eq",
+        "values": [
+          "NO"
+        ],
+        "anchor": 3,
+        "basis": "Institution is privately held and requires ownership review"
+      }
     ],
     "F4": [
-      {"rule_id": "F4-R1", "workbook": "CBDDQ", "field": "18", "op": "eq", "values": ["YES"],
-       "anchor": 10, "basis": "Shell bank asserted, FATF Rec 18 hard exclusion also fires"},
-      {"rule_id": "F4-R2", "workbook": "CBDDQ", "field": "17", "op": "eq", "values": ["YES"],
-       "anchor": 0, "basis": "Physical presence asserted and not a shell bank"},
-      {"rule_id": "F4-R3", "workbook": "CBDDQ", "field": "17", "op": "eq", "values": ["NO"],
-       "anchor": 10, "basis": "No physical presence"}
+      {
+        "rule_id": "F4-R1",
+        "workbook": "CBDDQ",
+        "field": "18",
+        "op": "eq",
+        "values": [
+          "YES"
+        ],
+        "anchor": 10,
+        "basis": "Shell bank is asserted; hard-exclusion review also applies"
+      },
+      {
+        "rule_id": "F4-R2",
+        "workbook": "CBDDQ",
+        "field": "17",
+        "op": "eq",
+        "values": [
+          "YES"
+        ],
+        "anchor": 0,
+        "basis": "Physical presence is asserted and shell-bank status is not asserted"
+      },
+      {
+        "rule_id": "F4-R3",
+        "workbook": "CBDDQ",
+        "field": "17",
+        "op": "eq",
+        "values": [
+          "NO"
+        ],
+        "anchor": 10,
+        "basis": "No physical presence is asserted"
+      }
     ],
     "F5": [
-      {"rule_id": "F5-R1", "workbook": "CBDDQ", "field": "20", "op": "eq", "values": ["YES"],
-       "anchor": 10, "basis": "Payable-through accounts offered, FATF Rec 7(e)"},
-      {"rule_id": "F5-R2", "workbook": "CBDDQ", "field": "19a", "op": "eq", "values": ["YES"],
-       "anchor": 6, "basis": "Nested relationships offered"},
-      {"rule_id": "F5-R3", "workbook": "CBDDQ", "field": "19", "op": "eq", "values": ["NO"],
-       "anchor": 3, "basis": "Respondent banks not permitted to use the account"}
+      {
+        "rule_id": "F5-R1",
+        "workbook": "CBDDQ",
+        "field": "20",
+        "op": "eq",
+        "values": [
+          "YES"
+        ],
+        "anchor": 10,
+        "basis": "Payable-through arrangements are offered"
+      },
+      {
+        "rule_id": "F5-R2",
+        "workbook": "CBDDQ",
+        "field": "19a",
+        "op": "eq",
+        "values": [
+          "YES"
+        ],
+        "anchor": 6,
+        "basis": "Nested relationships are offered"
+      },
+      {
+        "rule_id": "F5-R3",
+        "workbook": "CBDDQ",
+        "field": "19",
+        "op": "eq",
+        "values": [
+          "NO"
+        ],
+        "anchor": 3,
+        "basis": "Respondent banks are not permitted to use the account"
+      },
+      {
+        "rule_id": "F5-R4",
+        "workbook": "CBDDQ",
+        "field": "19",
+        "op": "eq",
+        "values": [
+          "YES"
+        ],
+        "anchor": 10,
+        "basis": "Respondent-bank use is permitted, creating elevated downstream correspondent exposure"
+      }
     ],
     "F6": [
-      {"rule_id": "F6-R1", "workbook": "RELATIONSHIP_SCOPING", "field": "S23", "op": "contains",
-       "values": ["Regulated corporate and institutional"],
-       "anchor": 3, "basis": "Regulated corporate and institutional customer base"},
-      {"rule_id": "F6-R2", "workbook": "RELATIONSHIP_SCOPING", "field": "S23", "op": "not_contains",
-       "values": ["Regulated corporate and institutional"],
-       "anchor": 6, "basis": "Customer base not limited to regulated counterparties"}
+      {
+        "rule_id": "F6-R1",
+        "workbook": "RELATIONSHIP_SCOPING",
+        "field": "S23",
+        "op": "contains",
+        "values": [
+          "Regulated corporate and institutional"
+        ],
+        "anchor": 3,
+        "basis": "Expected customer base is limited to regulated corporate and institutional counterparties"
+      },
+      {
+        "rule_id": "F6-R2",
+        "workbook": "RELATIONSHIP_SCOPING",
+        "field": "S23",
+        "op": "not_contains",
+        "values": [
+          "Regulated corporate and institutional"
+        ],
+        "anchor": 6,
+        "basis": "Expected customer base is not limited to regulated counterparties"
+      }
     ]
   },
   "control_rules": {
-    "C1": {"workbook": "CBDDQ", "assertion_field": "22",
-           "verification_field": {"workbook": "RELATIONSHIP_SCOPING", "field": "S34"}},
-    "C2": {"workbook": "CBDDQ", "assertion_field": "62",
-           "verification_field": {"workbook": "RELATIONSHIP_SCOPING", "field": "S34"}},
-    "C3": {"workbook": "CBDDQ", "assertion_field": "98",
-           "verification_field": {"workbook": "RELATIONSHIP_SCOPING", "field": "S34"}},
-    "C4": {"workbook": "CBDDQ", "assertion_field": "49d",
-           "verification_field": {"workbook": "RELATIONSHIP_SCOPING", "field": "S34"}}
+    "C1": {
+      "workbook": "CBDDQ",
+      "assertion_field": "22",
+      "verification_field": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "field": "S34"
+      }
+    },
+    "C2": {
+      "workbook": "CBDDQ",
+      "assertion_field": "62",
+      "verification_field": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "field": "S34"
+      }
+    },
+    "C3": {
+      "workbook": "CBDDQ",
+      "assertion_field": "98",
+      "verification_field": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "field": "S34"
+      }
+    },
+    "C4": {
+      "workbook": "CBDDQ",
+      "assertion_field": "49d",
+      "verification_field": {
+        "workbook": "RELATIONSHIP_SCOPING",
+        "field": "S34"
+      }
+    }
   },
   "evidence_tier_logic": {
     "VERIFIED_INDEPENDENT": "Independently evidenced",

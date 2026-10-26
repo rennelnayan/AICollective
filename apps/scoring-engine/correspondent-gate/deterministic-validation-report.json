@@ -4,7 +4,7 @@
   "case_id": "CG-CASE-HP-002",
   "run_id": "CG-RUN-HP-002",
   "validator_version": "1.0.2",
-  "executed_on": "2026-09-28T20:59:13.241Z",
+  "executed_on": "2026-10-25T20:10:43.160Z",
   "overall_result": "PASS",
   "gate_1_review_allowed": true,
   "summary": {
@@ -53,7 +53,7 @@
       "result": "PASS",
       "severity": "CRITICAL",
       "check_description": "Fact IDs must be unique.",
-      "actual_value": "22",
+      "actual_value": "36",
       "required_action": ""
     },
     {
@@ -101,7 +101,7 @@
       "result": "PASS",
       "severity": "HIGH",
       "check_description": "Declared schema, mapping, and risk-model versions must match the invocation.",
-      "actual_value": "{\"schema_versions\":[\"1.1.0\",\"1.1.0\",\"1.1.0\"],\"mapping_version\":\"1.0.0\",\"risk_model_version\":\"0.1\"}",
+      "actual_value": "{\"schema_versions\":[\"1.1.0\",\"1.1.0\",\"1.1.0\"],\"mapping_version\":\"1.1.0\",\"risk_model_version\":\"0.1\"}",
       "required_action": ""
     },
     {
